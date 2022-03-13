@@ -1,0 +1,88 @@
+﻿@model IEnumerable<DataLayer.Products>
+@{
+    ViewBag.Title = "آرشیو محصولات";
+}
+@section Filters
+{
+    <section class="border-radius">
+        <header><h3> فیلتر ها  </h3></header>
+        <article class="filter">
+            <form action="/Archive" id="filterForm">
+                <input type="hidden" value="@ViewBag.pageId" id="pageId" name="pageId"/>
+                <p>عنوان</p>
+                <p>
+                    <input type="text" name="title" class="form-control" value="@ViewBag.productTitle"/>
+                </p>
+                <p>قیمت از</p>
+                <p>
+                    <input type="number" value="@ViewBag.minPrice" name="minPrice" class="form-control" />
+                </p>
+                <p>قیمت تا</p>
+                <p>
+                    <input type="number" value="@ViewBag.maxPrice" name="maxPrice" class="form-control" />
+                </p>
+                @{
+                    List<DataLayer.Product_Groups> list = ViewBag.Groups;
+                    List<int> selected = ViewBag.selectGroup ?? new List<int>();
+                }
+                <p>گروه ها</p>
+                <ul>
+                    @foreach (var group in list.Where(g => g.ParentID == null))
+                    {
+                    <li>
+                        <input type="checkbox" name="selectedGroups" @((selected.Any(s=>s==group.GroupID))?"checked":"") value="@group.GroupID" />
+                        <span>@group.GroupTitle</span> 
+                        @if(list.Any(g=>g.ParentID==group.GroupID))
+                        {
+                            <ul>
+                                @foreach(var subGroup in list.Where(g=>g.ParentID==group.GroupID))
+                                {
+                                    <li>
+                                        <input type="checkbox" name="selectedGroups"  @((selected.Any(s=>s== subGroup.GroupID))?"checked":"") value="@subGroup.GroupID" />
+                                        <span>@subGroup.GroupTitle</span>
+                                    </li>
+                                }
+                            </ul>
+                        }
+                    </li>
+                    }
+                </ul>
+                <input type="submit" class="btn btn-block btn-primary" value="اعمال"/>
+            </form>
+        </article>
+    </section>
+}
+
+<section class="last-products">
+    <header><h3> آرشیو محصولات </h3></header>
+    <article>
+
+        @foreach (var item in Model)
+        {
+            @Html.Partial("_product", item)
+        }
+
+        <div class="clearfix"></div>
+    </article>
+</section>
+@if (ViewBag.PageCount > 1)
+{
+<div class="pagination-layer">
+    <ul class="pagination">
+     
+        @for (int i = 1; i <= ViewBag.PageCount; i++)
+        {
+            <li><a onclick="changePage(@i)">@i</a></li>
+        }
+
+    </ul>
+</div>
+}
+
+<script>
+    function changePage(pageId)
+    {
+        $("#pageId").val(pageId);
+        $("#filterForm").submit();
+    }
+</script>

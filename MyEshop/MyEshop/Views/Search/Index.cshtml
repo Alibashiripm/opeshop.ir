@@ -1,0 +1,19 @@
+﻿@model IEnumerable<DataLayer.Products>
+@{
+    ViewBag.Title = "Index";
+}
+
+<section class="last-products">
+    <header><h3> تعداد @Model.Count() محصول با کلمه @ViewBag.search یافت شد . </h3></header>
+    <article>
+
+        @foreach (var item in Model)
+        {
+            @Html.Partial("_product", item)
+        }
+
+        <div class="clearfix"></div>
+    </article>
+</section>
+
+

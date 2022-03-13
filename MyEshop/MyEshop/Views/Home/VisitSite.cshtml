@@ -1,0 +1,14 @@
+﻿@model  DataLayer.ViewModels.VisitSiteViewModel
+
+<div class="thumbnail" style="background-color: #ffd71d">
+    <dl class="dl-horizontal">
+        <dt>بازدید امروز :</dt>
+        <dd>@Model.VisitToday</dd>
+        <dt>بازدید دیروز :</dt>
+        <dd>@Model.VisitYesterday</dd>
+        <dt>بازدید کل :</dt>
+        <dd>@Model.VisitSum</dd>
+        <dt>افزاد آنلاین :</dt>
+        <dd>@Model.online</dd>
+    </dl>
+</div>
