@@ -130,7 +130,7 @@ namespace MyEshop.Controllers
             ServiceReference1.PaymentGatewayImplementationServicePortTypeClient zp = new ServiceReference1.PaymentGatewayImplementationServicePortTypeClient();
             string Authority;
 
-            int Status = zp.PaymentRequest("9ad3c2fe-1482-4015-a7c5-6d406610fae4", price, "درگاه زرین پال", "bashiriali2002@gmail.com", "09376924833", "https://opeshop.ir/ShopCart/Verify/" + order.OrderID, out Authority);
+            int Status = zp.PaymentRequest("**********************", price, "درگاه زرین پال", "bashiriali2002@gmail.com", "09376924833", "https://opeshop.ir/ShopCart/Verify/" + order.OrderID, out Authority);
 
             if (Status == 100)
             {
@@ -165,7 +165,7 @@ namespace MyEshop.Controllers
                     System.Net.ServicePointManager.Expect100Continue = false;
                     ServiceReference1.PaymentGatewayImplementationServicePortTypeClient zp = new ServiceReference1.PaymentGatewayImplementationServicePortTypeClient();
 
-                    int Status = zp.PaymentVerification("9ad3c2fe-1482-4015-a7c5-6d406610fae4", Request.QueryString["Authority"].ToString(), Amount, out RefID);
+                    int Status = zp.PaymentVerification("******************", Request.QueryString["Authority"].ToString(), Amount, out RefID);
 
                     if (Status == 100)
                     {
